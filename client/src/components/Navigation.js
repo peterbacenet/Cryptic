@@ -2,18 +2,21 @@ import { Input, Menu } from 'semantic-ui-react'
 import React, { useState } from 'react'
 import { Switch, Route, NavLink } from 'react-router-dom'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { Link } from "react-router-dom";
 import { Header, Icon} from 'semantic-ui-react'
+
 
 function Navigation () {
 
 const linkStyles = {
+    paddingtop: "5px",
     display: "inline-block",
     width: "100px",
     padding: "5px",
     margin: "0 6px 6px",
     background: "black",
     textDecoration: "none",
-    color: "yellow"
+    color: "mediumspringgreen"
   };
 
 function handleLogout() {
@@ -21,35 +24,30 @@ function handleLogout() {
 }
 
     return (
-        <div>
+        <div className="mainheader">
 
-        <Header as='h5'icon>
-                <Icon id="icon" name='music'/>
-                <h1>
-                Cryptic
-                </h1>
+            <Header as='h5'icon>
+                
+                <h2>
+                    <Icon id="icon" name='gem outline' />
+                    Cryptic
+                </h2>
                 <Header.Subheader >
-                Browse currencies, and find something new.
+                    Browse currencies, and find something new.
                 </Header.Subheader>
-        <br/>
-        <nav>
-        <span name="header">
-            <Router>
-                <NavLink to="/" style={linkStyles}> Home </NavLink>
-                <NavLink to="/profile" style={linkStyles}>Profile</NavLink>
-                <NavLink to="/discover" style={linkStyles}>Currencies</NavLink>
-                <NavLink to="/login" style={linkStyles} onClick={handleLogout}>Logout</NavLink>
-            </Router>
-        </span>
+                    <br/>
+                <nav>
+                <Menu secondary name="header">
+                        <Link to="/" style={linkStyles}> Home </Link>
+                        <Link to="/profile" style={linkStyles}>Profile</Link>
+                        <Link to="/currencies" style={linkStyles}>Currencies</Link>
+                        <Link to="/authenticate" style={linkStyles} onClick={handleLogout}>Logout</Link>
+                </Menu>
 
-        <br/>   
+                <br/>
+                </nav>
 
-        {/* <span>Logged in as {currentUser.email} </span> */}
-
-        </nav>
-
-        </Header>
-
+            </Header>
         </div>
     )
 }

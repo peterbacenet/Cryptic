@@ -3,6 +3,10 @@ import { useState, useEffect } from 'react';
 import { Switch, Route, NavLink } from 'react-router-dom'
 import Navigation from './Navigation'
 import CryptoContainer from "./CryptoContainer";
+import Profile from "./Profile"
+import Currencies from "./Currencies"  
+import Authentication from "./Authentication" 
+
 
 function Homepage () {
 const [marketData, setMarketData] = useState([])
@@ -21,7 +25,7 @@ useEffect( () => {
 
 // created containers for Market Data
 const singleCrypto = marketData.map((crypto) => (
-        <CryptoContainer crypto={crypto} />
+    <CryptoContainer crypto={crypto} />
 ))
 // featured Crypto is Bitcoin
 const featuredCrypto = marketData.find((data) => (data.T = "X:BTCUSD"))
@@ -33,12 +37,19 @@ console.log("Featured Crypto...", featuredCrypto)
             <div className='ui menu'>
             <Navigation />
             </div>
-
             <body>
-                {/* {featuredCrypto} */}
-                {/* <BulletinContainer /> */}
+            <Switch>
+                    <Route path="/currencies">
+                        <Currencies singleCrypto={singleCrypto} />
+                    </Route>
+                    <Route path="/profile">
+                        <Profile />
+                    </Route>
+                    <Route path="/authenticate">
+                        <Authentication />
+                    </Route>
+            </Switch>
             </body>
-            
         </div>
     )
 }

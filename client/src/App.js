@@ -1,11 +1,7 @@
 import Homepage from './components/Homepage';
-import logo from './logo.svg';
 import './App.css';
-import { polygonClient, restClient, websocketClient } from "@polygon.io/client-js";
-import { useState } from 'react';
 
 function App() {
-  
 // provide authentication
 
 

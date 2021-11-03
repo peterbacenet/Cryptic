@@ -36,3 +36,35 @@
     transform: rotate(360deg);
   }
 }
+
+.mainheader{
+  padding-top: 20px;
+  margin: auto;
+}
+
+.ui.menu{
+  background:hsla(56, 100%, 50%, 0.637);
+}
+.ui.secondary.menu {
+  padding-top: 10px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-style: oblique;
+  font-weight: bolder;
+}
+.cards{
+margin: auto;
+padding: 15px;
+display: flex;
+justify-content: space-between;
+}
+
+.ui.card{
+  background-blend-mode: luminosity;
+  background-color: mediumspringgreen;
+}
+
+.crypto {
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+}
