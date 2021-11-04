@@ -35,20 +35,24 @@ console.log("Featured Crypto...", featuredCrypto)
     return (
         <div>
             <div className='ui menu'>
-            <Navigation />
+                <Navigation />
             </div>
             <body>
-            <Switch>
+                <Switch>
+                    <Route exact path ="/">
+                        <h3>Please login or signup for the full experience</h3>
+                        <Authentication />
+                    </Route>
+                    <Route exact path="/home">
+                        <h1>The Hub</h1>
+                    </Route>
                     <Route path="/currencies">
                         <Currencies singleCrypto={singleCrypto} />
                     </Route>
                     <Route path="/profile">
                         <Profile />
                     </Route>
-                    <Route path="/authenticate">
-                        <Authentication />
-                    </Route>
-            </Switch>
+                </Switch>
             </body>
         </div>
     )
