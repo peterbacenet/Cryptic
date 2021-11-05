@@ -7,15 +7,16 @@ import { Header, Icon} from 'semantic-ui-react';
 import Authentication from './Authentication';
 
 
-function Navigation () {
-const [loggedIn, setLoggedIn] = useState(false)
+function Navigation (props) {
+const {loggedIn, setLoggedIn, currentUser, setCurrentUser} = props;
+
 const linkStyles = {
     paddingtop: "5px",
     display: "inline-block",
     width: "100px",
     padding: "5px",
     margin: "0 6px 6px",
-    background: "springgreen",
+    background: "magenta",
     textDecoration: "none",
   };
 
@@ -26,7 +27,7 @@ function handleLogOut(){
     return (
         <div className="mainheader">
 
-            <Header as='h5'icon>
+            <Header>
                 
                 <h2>
                     <Icon id="icon" name='gem outline' />
@@ -38,25 +39,26 @@ function handleLogOut(){
                     <br/>
                 <nav>
                 <Menu secondary >
-                        <Menu.Item style={linkStyles} >
-                            <Link to="/home"> Home </Link>
-                        </Menu.Item>
-
+                {loggedIn? (
                         <Menu.Item style={linkStyles}>
                             <Link to="/profile">Profile</Link>
-                        </Menu.Item>
+                        </Menu.Item>): null }
 
+                        <Menu.Item style={linkStyles} >
+                            <Link to="/"> Home </Link>
+                        </Menu.Item>
+            
                         <Menu.Item style={linkStyles}>
                             <Link to="/currencies">Currencies</Link>
                         </Menu.Item>
                         
                         {loggedIn? (
                             <Menu.Item onClick={handleLogOut} style={linkStyles} >
-                            <p>Log Out</p>
+                            Log Out
                             </Menu.Item>
                         ):(
                         <Menu.Item style={linkStyles} >
-						<p><Authentication loggedIn={loggedIn} setLoggedIn={setLoggedIn} /></p>
+						<Authentication currentUser={currentUser} setCurrentUser={setCurrentUser} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
                         </Menu.Item>)}
                 </Menu>
 

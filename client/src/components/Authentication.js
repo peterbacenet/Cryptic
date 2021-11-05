@@ -1,48 +1,78 @@
 import React from 'react'
 import { Button, Header, Image, Form, Modal } from 'semantic-ui-react'
 import { useState, useEffect } from 'react';
-import { Switch, Route, NavLink, Link } from 'react-router-dom'
-import { BrowserRouter as Router } from 'react-router-dom'
-import Navigation from './Navigation';
-import Homepage from './Homepage';
 
 function Authentication (props) {
 // authentication should be a modal
-    const {linkStyles, loggedIn, setLoggedIn} = props;
+    const {linkStyles, loggedIn, setLoggedIn, toggle, setToggle, currentUser, setCurrentUser} = props;
     const [open, setOpen] = React.useState(false)
-    const [currentUser, setCurrentUser] = useState(null)
     const [authChecked, setAuthChecked] = useState(false)
     const [signUp, setSignUp] = useState(false)
+    const [name, setName] = useState("")
+    const [password, setPassword] = useState("")
+    const [confirmation, setConfirmation] = useState("")
+
+console.log(name, password, confirmation)
 
     function handleLogIn(){
-        console.log("You've Logged In")
-        setLoggedIn(true)
-        setOpen(false)
-    }
-
+        fetch('/login', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({name, password})
+        })
+            .then(res => {
+            if (res.ok) {
+                res.json().then(user => {
+                console.log(user)
+                setOpen(false)
+                setCurrentUser(user)
+                setLoggedIn(true)
+                })
+            } else {
+                res.json().then(errors => {
+                console.log("Bad Login")
+                })
+            }
+            })
+}
+//////////////////////////////////////////////////////////////////////
     function handleSignUp() {
-        console.log("You've Signed Up")
-        setLoggedIn(true)
-        setOpen(false)
-    }
-    // useEffect(() => {
-    //     fetch('/me', {
-    //     credentials: 'include'
-    //     })
-    //     .then(res => (
+        fetch('/signup',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name,
+                password,
+                password_confirmation: confirmation
+            })
+        })
+        .then(res => {
+            if (res.ok) {
+                res.json().then(user => {
+                    setCurrentUser(user)
+                    console.log(user)
+                    setLoggedIn(true)
+                    setOpen(false)
+                })
+            } else {
+                res.json().then(errors => {
+                    console.log(errors)
+                })
+            }
+        })
 
-    //         (res.ok) ? 
-            
-    //         (res.json().then((user) => (
-    //             setCurrentUser(user),
-    //             setAuthChecked(true),
-    //             < Navigation currentUser={currentUser} />)))
-    // :
-    //         (setAuthChecked(false),
-    //             < Navigation currentUser={currentUser} />)
         
-    // ))}, [])
-    //             // if authchecked is false, display message credentials invalid
+        
+        //post user
+        //fetch user
+        //set user
+    }
+
+    // if authchecked is false, display message credentials invalid
     // if(!authChecked) {
     //     return 
     //     <div>
@@ -66,43 +96,41 @@ function Authentication (props) {
                         Name
                     </label>
                 <br/>
-                    <input type="text" name="name" // value={username} // onChange={(e) => setUsername(e.target.value)}
-                    />
+                    <input onChange={(e)=> setName(e.target.value)} value={name} type="text" name="name"/>
                 <br/>
                     <label htmlFor="password">
                         Password
                     </label>
                 <br/>
-                    <input type="text" name="password" // value={username} // onChange={(e) => setUsername(e.target.value)}
-                    />
+                    {/* <input type="text" onChange={e => setState({ text: e.target.value })}/> */}
+                    <input onChange={(e)=>setPassword(e.target.value)} value={password} type="text" name="password"/>
                 <br/>
                     <label htmlFor="confirmation">
                         Password Confirmation
                     </label>
                 <br/>
-                    <input type="text" name="confirmation" // value={username} // onChange={(e) => setUsername(e.target.value)}
+                    <input onChange={(e)=>setConfirmation(e.target.value)} value={confirmation} type="text" name="confirmation" // value={username} // onChange={(e) => setUsername(e.target.value)}
                     />
                 </p>
                 </Modal.Description>
             ):(
-                <Modal.Description>
+                <Form.Field>
                 <Header>Log In</Header>
                 <p>
                     <label htmlFor="name">
                         Name
                     </label>
                 <br/>
-                    <input type="text" name="name" // value={username} // onChange={(e) => setUsername(e.target.value)}
-                    />
-                <br/>
+                <input onChange={(e)=> setName(e.target.value)} type="text" name="name"/>
+                <br/> 
                     <label htmlFor="password">
                         Password
                     </label>
                 <br/>
-                    <input type="text" name="password" // value={username} // onChange={(e) => setUsername(e.target.value)}
+                    <input onChange={(e)=>setPassword(e.target.value)} type="text" name="password" // value={username} // onChange={(e) => setUsername(e.target.value)}
                     />
                 </p>
-                </Modal.Description>
+                </Form.Field>
             )}
         </Modal.Content>
         <Modal.Actions>
@@ -123,7 +151,6 @@ function Authentication (props) {
         // handle sign up
             <Button
             content="Submit"
-            labelPosition='right'
             icon='checkmark'
             onClick={handleSignUp}
             positive
@@ -131,7 +158,6 @@ function Authentication (props) {
         // handle log in
             <Button
             content="Submit"
-            labelPosition='right'
             icon='checkmark'
             onClick={handleLogIn}
             positive
@@ -142,4 +168,5 @@ function Authentication (props) {
     </Modal>
         )  
 }
+
 export default Authentication;

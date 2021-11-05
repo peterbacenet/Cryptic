@@ -25,7 +25,7 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color:black;
 }
 
 @keyframes App-logo-spin {
@@ -43,7 +43,7 @@
 }
 
 .ui.menu{
-  background:hsla(56, 100%, 50%, 0.637);
+  background:rgb(236, 255, 132);
 }
 .ui.secondary.menu {
   padding-top: 10px;
@@ -60,7 +60,7 @@ justify-content: space-between;
 
 .ui.card{
   background-blend-mode: luminosity;
-  background-color: mediumspringgreen;
+  background-color:rgb(169, 255, 212);
 }
 
 .crypto {

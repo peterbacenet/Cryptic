@@ -6,9 +6,9 @@ function Currencies (props) {
     // console.log(singleCrypto)
     return (
         <div>
-            <h3>Market Data as of  </h3>
-            <div class="ui icon input">
-                <i class="search icon"></i>
+            <h3>Market Data as of {date}  </h3>
+            <div className="ui icon input">
+                <i className="search icon"></i>
                 <input 
                     type="text" 
                     placeholder="Search..." 
