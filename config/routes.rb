@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   # Leave this here to help deploy your app later!
   #for login
   # patch "/users/:id", to: "users#update"
+  get "/bulletins/crypto/:crypto_id" ,to: "bulletins#getCrypto"
+  get "/comments/crypto/:crypto_id" ,to: "comments#getCrypto"
+  get "/crypto/:data", to: "cryptos#getCrypto"
   post "/login", to: "sessions#create"
   get "/auth", to: "users#show"
   #create new user

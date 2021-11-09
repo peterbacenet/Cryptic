@@ -1,7 +1,18 @@
 import { Card, Image, Button } from 'semantic-ui-react'
 import { useState, useEffect } from 'react';
+import CryptoDetails from './CryptoDetails'
 function CryptoContainer (props) {
 const {crypto, watchlist, setWatchlist, currentUser} = props;
+const [cryptoData, setCryptoData] = useState([])
+
+function fetchingCrypto() {
+    fetch(`/crypto/${crypto.T}`)
+    .then((r) => r.json())
+    .then(data => {
+        console.log("It really worked")
+        setCryptoData(data)
+});
+}
 
 function createCrypto() {
     console.log(crypto)
@@ -19,6 +30,7 @@ function createCrypto() {
             else
             console.log("Could Not Create")
     })
+    fetchingCrypto();
 }
 
 function updateWatch() {
@@ -54,8 +66,8 @@ function updateWatch() {
       currentUser? (
       <Card.Content extra>
         <div className='ui two buttons'>
-        <Button basic color='teal' onClick={createCrypto}>
-            Bulletins
+        <Button basic color='teal' onClick={fetchingCrypto}>
+            <CryptoDetails cryptoData={cryptoData} />
         </Button>
         <Button onClick={() =>updateWatch(currentUser)} basic color='red'>
             Watchlist

@@ -6,7 +6,7 @@ function Authentication (props) {
 // authentication should be a modal
     const {currentUser, setCurrentUser, watchlist, setWatchlist} = props;
     const [open, setOpen] = React.useState(false)
-    const [authChecked, setAuthChecked] = useState(false)
+    // const [authChecked, setAuthChecked] = useState(false)
     const [signUp, setSignUp] = useState(false)
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")

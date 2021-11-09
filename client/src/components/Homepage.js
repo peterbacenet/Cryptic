@@ -17,13 +17,14 @@ const [allBullets, setAllBullets] = useState([])
 const [watchlist, setWatchlist] = useState([])
 const rest = restClient("ozCbtJMUwHk31pXy7OhIeWbHzjytSflP");
 const date = "2021-11-05"
-const featuredCrypto = marketData.find((data) => (data.T = "X:BTCUSD"))
+// const featuredCrypto = marketData.find((data) => (data.T = "X:BTCUSD"))
 const filter = ( marketData.filter((data) => input === "" || data.T.toLowerCase().includes(input.toLowerCase()) ))
 // auto load market data
 useEffect( () => { 
     fetch(`https://api.polygon.io/v2/aggs/grouped/locale/global/market/crypto/${date}?adjusted=true&apiKey=ozCbtJMUwHk31pXy7OhIeWbHzjytSflP`)
     .then((r) => r.json())
     .then(data => {
+        console.log(data)
     setMarketData(data.results)
     
 })
@@ -35,13 +36,12 @@ useEffect( () => {
     .then((r) => r.json())
     .then(data => {
     allBullets.push(data)
-    createBulletins()
 })
 }, [])
 
-  if (currentUser) {
+if (currentUser) {
 console.log(currentUser)
-  } 
+} 
 const singleCrypto = filter.map((crypto) => (
     <CryptoContainer 
         key={crypto.T}
@@ -56,14 +56,13 @@ const singleCrypto = filter.map((crypto) => (
 
 
 
-function createBulletins () {
-allBullets.map((bullet) => (
+const createBulletins = allBullets.map((bullet) => (
     <BulletinContainer 
-        bullet={bullet}
-        />
+        bulletin={bullet}
+        currentUser={currentUser}
+    /> 
 ))
-}
-// console.log(watchlist)
+
     return (
         <div>
             <div className='ui menu'>

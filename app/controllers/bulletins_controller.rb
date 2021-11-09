@@ -18,6 +18,10 @@ class BulletinsController < ApplicationController
         end
     end
 
+    def getCrypto
+        crypto_bulletin = Bulletin.find(params[:crypto_id])
+        render json: crypto_bulletin, status: 200
+    end
     private
 
     def bulletin_params

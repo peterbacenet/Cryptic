@@ -1,5 +1,5 @@
 class CryptosController < ApplicationController
-    skip_before_action :authorize, only: [:create, :index]
+    skip_before_action :authorize, only: [:create, :index, :show]
 
     def create
         new_crypto = Crypto.new(crypto_params)
@@ -10,6 +10,10 @@ class CryptosController < ApplicationController
         end
     end
     
+    def getCrypto
+        selected_crypto = Crypto.find_by(data: params[:data])
+        render json: selected_crypto, status: 200
+    end
     private
 
     def crypto_params
