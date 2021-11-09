@@ -1,7 +1,9 @@
 import Homepage from './components/Homepage';
+import { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
+  const [currentUser, setCurrentUser] = useState(null)
 // provide authentication
 
 
@@ -38,10 +40,21 @@ function App() {
 // .then(data => console.log(data))
 
 // rest.crypto.aggregates("SHIB", 1, "week", "2021-10-05","2021-10-05") // aggregate error
+
+useEffect(() => {
+  fetch("/me").then((response) => {
+    if (response.ok) {
+      response.json().then((user) => 
+      setCurrentUser(user)
+      );
+    }
+  });
+}, []);
+
   
   return (
     <div className="App"> 
-      <Homepage />
+      <Homepage currentUser={currentUser} setCurrentUser={setCurrentUser}/>
     </div>
   );
 }

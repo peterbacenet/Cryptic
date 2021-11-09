@@ -7,68 +7,93 @@ import Profile from "./Profile"
 import Currencies from "./Currencies"  
 import BulletinContainer from "./BulletinContainer";
 import FeaturedContainer from "./FeaturedContainer";
+import Authentication from "./Authentication";
 
 
-function Homepage () {
+function Homepage ({currentUser, setCurrentUser}) {
 const [marketData, setMarketData] = useState([])
-const [loggedIn, setLoggedIn] = useState(false)
-const [currentUser, setCurrentUser] = useState([])
-const rest = restClient("ozCbtJMUwHk31pXy7OhIeWbHzjytSflP");
-const date = "2021-11-03"
-const allBullets = []
+const [input, setInput] = useState("")
 
+const [watchlist, setWatchlist] = useState([])
+const rest = restClient("ozCbtJMUwHk31pXy7OhIeWbHzjytSflP");
+const date = "2021-11-05"
+const allBullets = []
+const featuredCrypto = marketData.find((data) => (data.T = "X:BTCUSD"))
+const filter= ( marketData.filter((data) => input === "" || data.T.toLowerCase().includes(input.toLowerCase()) ))
+// auto load market data
 useEffect( () => { 
     fetch(`https://api.polygon.io/v2/aggs/grouped/locale/global/market/crypto/${date}?adjusted=true&apiKey=ozCbtJMUwHk31pXy7OhIeWbHzjytSflP`)
     .then((r) => r.json())
     .then(data => {
     setMarketData(data.results)
+    
 })
 }, [])
 
-
+// auto load bulletins on load
 useEffect( () => { 
     fetch(`/bulletins`)
     .then((r) => r.json())
     .then(data => {
     allBullets.push(data)
+    console.log(allBullets)
 })
 }, [])
 
-console.log(allBullets)
-// created containers for Market Data
-const singleCrypto = marketData.map((crypto) => (
+  if (currentUser) {
+console.log(currentUser)
+  } 
+const singleCrypto = filter.map((crypto) => (
     <CryptoContainer 
         key={crypto.T}
         currentUser={currentUser} 
-        loggedIn={loggedIn} 
-        crypto={crypto}/>
+        crypto={crypto}
+        watchlist={watchlist}
+        setWatchlist={setWatchlist} />
 ))
 // featured Crypto is Bitcoin
-const featuredCrypto = marketData.find((data) => (data.T = "X:BTCUSD"))
 
-//convert watchlist to array
-currentUser.watchlist=[]
-console.log(currentUser)
-// console.log("Current State...",marketData)
-// console.log("Featured Crypto...", featuredCrypto)   
+// filtered Crypto based on searchbar in currencies
+
+
+
+const createBulletins = allBullets.map((bullet) => (
+    <BulletinContainer 
+        bullet={bullet}
+        />
+))
+// console.log(watchlist)
     return (
         <div>
             <div className='ui menu'>
-                <Navigation currentUser={currentUser} setCurrentUser={setCurrentUser} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+                <Navigation watchlist={watchlist} setWatchlist={setWatchlist} currentUser={currentUser} setCurrentUser={setCurrentUser} />
             </div>
                 <Switch>
+
                     <Route exact path ="/">
-                        <h3>Please login or signup for the full experience</h3>
-                        <h1>Welcome to Cryptic, your only source for Crypto Currency market data, and user interaction</h1>
-                        <FeaturedContainer />
+                        <div className="main">
+                        {currentUser? (<h1> Welcome to Cryptic, {currentUser.name} </h1>): (<h1> Please Login for the Full Cryptic Experience </h1>)}
+                        <p> This weeks featured crypto is Bitcoin </p>
+                        <FeaturedContainer crypto={featuredCrypto} />
+                        <br/>
                         <BulletinContainer />
+                        </div>
                     </Route>
+
                     <Route path="/currencies">
-                        <Currencies date={date}loggedIn={loggedIn} singleCrypto={singleCrypto} />
+                        <Currencies date={date}  input={input} setInput={setInput} singleCrypto={singleCrypto} />
                     </Route>
+                    {currentUser? (
                     <Route path="/profile">
                         <Profile currentUser={currentUser} />
                     </Route>
+                    ):(
+                    <Route path="/profile">
+                        <Authentication />
+                    </Route>
+                    )}
+                    
+
                 </Switch>
         </div>
     )

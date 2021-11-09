@@ -8,21 +8,25 @@ import Authentication from './Authentication';
 
 
 function Navigation (props) {
-const {loggedIn, setLoggedIn, currentUser, setCurrentUser} = props;
+const {currentUser, setCurrentUser, watchlist, setWatchlist} = props;
 
-const linkStyles = {
-    paddingtop: "5px",
-    display: "inline-block",
-    width: "100px",
-    padding: "5px",
-    margin: "0 6px 6px",
-    background: "magenta",
-    textDecoration: "none",
-  };
+    const linkStyles = {
+        paddingtop: "5px",
+        display: "inline-block",
+        width: "100px",
+        padding: "5px",
+        margin: "0 6px 6px",
+        background: "magenta",
+        textDecoration: "none",
+    };
 
 function handleLogOut(){
-    setLoggedIn(false)
-}
+    setCurrentUser(null)
+    console.log("Current user...", currentUser)
+    fetch("/logout", {
+        method: "DELETE",
+      }).then(console.log("Current user...", currentUser));
+    }
 
     return (
         <div className="mainheader">
@@ -39,7 +43,7 @@ function handleLogOut(){
                     <br/>
                 <nav>
                 <Menu secondary >
-                {loggedIn? (
+                {currentUser? (
                         <Menu.Item style={linkStyles}>
                             <Link to="/profile">Profile</Link>
                         </Menu.Item>): null }
@@ -52,13 +56,13 @@ function handleLogOut(){
                             <Link to="/currencies">Currencies</Link>
                         </Menu.Item>
                         
-                        {loggedIn? (
+                        {currentUser? (
                             <Menu.Item onClick={handleLogOut} style={linkStyles} >
                             Log Out
                             </Menu.Item>
                         ):(
                         <Menu.Item style={linkStyles} >
-						<Authentication currentUser={currentUser} setCurrentUser={setCurrentUser} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+						<Authentication watchlist={watchlist} setWatchlist={setWatchlist} currentUser={currentUser} setCurrentUser={setCurrentUser}/>
                         </Menu.Item>)}
                 </Menu>
 

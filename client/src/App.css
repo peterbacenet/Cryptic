@@ -56,15 +56,34 @@ margin: auto;
 padding: 15px;
 display: flex;
 justify-content: space-between;
+max-width: 500px;
 }
 
 .ui.card{
+  margin: auto;
   background-blend-mode: luminosity;
   background-color:rgb(169, 255, 212);
+  width: fit-content;
+  max-width: 500px;
 }
 
 .crypto {
   flex-wrap: wrap;
   display: flex;
   justify-content: space-between;
+}
+
+.featuredcard {
+  margin: auto;
+  background-color: khaki;
+  padding-bottom: 50px;
+}
+.bulletin {
+  padding-top: 20px;
+  padding: 10px;
+  background-color:rgb(169, 255, 212);
+  box-shadow: lightcoral;
+}
+.bulletin Button{
+  background-color: magenta;
 }

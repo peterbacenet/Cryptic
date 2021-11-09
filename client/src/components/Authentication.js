@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 function Authentication (props) {
 // authentication should be a modal
-    const {linkStyles, loggedIn, setLoggedIn, toggle, setToggle, currentUser, setCurrentUser} = props;
+    const {currentUser, setCurrentUser, watchlist, setWatchlist} = props;
     const [open, setOpen] = React.useState(false)
     const [authChecked, setAuthChecked] = useState(false)
     const [signUp, setSignUp] = useState(false)
@@ -28,7 +28,8 @@ console.log(name, password, confirmation)
                 console.log(user)
                 setOpen(false)
                 setCurrentUser(user)
-                setLoggedIn(true)
+                setWatchlist(user.watchlist)
+                
                 })
             } else {
                 res.json().then(errors => {
@@ -54,8 +55,8 @@ console.log(name, password, confirmation)
             if (res.ok) {
                 res.json().then(user => {
                     setCurrentUser(user)
+                    setWatchlist(user.watchlist)
                     console.log(user)
-                    setLoggedIn(true)
                     setOpen(false)
                 })
             } else {
@@ -63,22 +64,7 @@ console.log(name, password, confirmation)
                     console.log(errors)
                 })
             }
-        })
-
-        
-        
-        //post user
-        //fetch user
-        //set user
-    }
-
-    // if authchecked is false, display message credentials invalid
-    // if(!authChecked) {
-    //     return 
-    //     <div>
-    //         Credentials Invalid! Please try again, or sign up for a new account
-    //     </div>
-    //     }
+        })}
 
     return (
     <Modal
@@ -163,7 +149,6 @@ console.log(name, password, confirmation)
             positive
         />)
         }
-        
         </Modal.Actions>
     </Modal>
         )  

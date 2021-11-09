@@ -19,8 +19,9 @@ class BulletinsController < ApplicationController
     end
 
     private
+
     def bulletin_params
-        params.permit(:content :crypto_id :user_id)
+        params.permit(:content, :crypto_id, :user_id)
     end
 
 end

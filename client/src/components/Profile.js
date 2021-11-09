@@ -1,19 +1,21 @@
+import { Card, Image, Button, CardContent } from 'semantic-ui-react'
+import CryptoContainer from './CryptoContainer'
 
-import { Card, Image, Button } from 'semantic-ui-react'
-
-function Profile ({currentUser, crypto}) {
-console.log(currentUser)
-console.log(currentUser.watchlist)
+function Profile ({currentUser}) {
+    console.log(currentUser.name)
+    let watchlist = currentUser.watchlist
+    console.log(watchlist)
+    const createCards = watchlist.forEach((crypto) => (
+        <CryptoContainer
+            crypto={crypto}
+            />
+    ))
     return (
         <div>
-            <h2> {currentUser.name} </h2>
-            <Card.Group>
-                
-                Watchlist Cards Go Here
-            </Card.Group>
-            <h2> User Activity</h2>
+    <h1> {currentUser.name}'s Profile </h1>
+    {createCards}
+    
         </div>
     )   
 }
-
 export default Profile;
