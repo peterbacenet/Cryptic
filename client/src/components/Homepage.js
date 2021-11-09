@@ -13,13 +13,12 @@ import Authentication from "./Authentication";
 function Homepage ({currentUser, setCurrentUser}) {
 const [marketData, setMarketData] = useState([])
 const [input, setInput] = useState("")
-
+const [allBullets, setAllBullets] = useState([])
 const [watchlist, setWatchlist] = useState([])
 const rest = restClient("ozCbtJMUwHk31pXy7OhIeWbHzjytSflP");
 const date = "2021-11-05"
-const allBullets = []
 const featuredCrypto = marketData.find((data) => (data.T = "X:BTCUSD"))
-const filter= ( marketData.filter((data) => input === "" || data.T.toLowerCase().includes(input.toLowerCase()) ))
+const filter = ( marketData.filter((data) => input === "" || data.T.toLowerCase().includes(input.toLowerCase()) ))
 // auto load market data
 useEffect( () => { 
     fetch(`https://api.polygon.io/v2/aggs/grouped/locale/global/market/crypto/${date}?adjusted=true&apiKey=ozCbtJMUwHk31pXy7OhIeWbHzjytSflP`)
@@ -36,7 +35,7 @@ useEffect( () => {
     .then((r) => r.json())
     .then(data => {
     allBullets.push(data)
-    console.log(allBullets)
+    createBulletins()
 })
 }, [])
 
@@ -57,11 +56,13 @@ const singleCrypto = filter.map((crypto) => (
 
 
 
-const createBulletins = allBullets.map((bullet) => (
+function createBulletins () {
+allBullets.map((bullet) => (
     <BulletinContainer 
         bullet={bullet}
         />
 ))
+}
 // console.log(watchlist)
     return (
         <div>
@@ -74,9 +75,7 @@ const createBulletins = allBullets.map((bullet) => (
                         <div className="main">
                         {currentUser? (<h1> Welcome to Cryptic, {currentUser.name} </h1>): (<h1> Please Login for the Full Cryptic Experience </h1>)}
                         <p> This weeks featured crypto is Bitcoin </p>
-                        <FeaturedContainer crypto={featuredCrypto} />
                         <br/>
-                        <BulletinContainer />
                         </div>
                     </Route>
 
