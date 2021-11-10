@@ -6,16 +6,17 @@ const {crypto, watchlist, setWatchlist, currentUser} = props;
 const [cryptoData, setCryptoData] = useState([])
 
 function fetchingCrypto() {
+    // createCrypto()
     fetch(`/crypto/${crypto.T}`)
     .then((r) => r.json())
     .then(data => {
-        console.log("It really worked")
         setCryptoData(data)
+        console.log(cryptoData)
 });
 }
 
 function createCrypto() {
-    console.log(crypto)
+    // console.log(crypto)
     fetch(`/cryptos`, {
         method: "POST",
         headers: {
@@ -61,20 +62,22 @@ function updateWatch() {
         <Card.Meta> Transaction Volume: {crypto.n} </Card.Meta>
         <Card.Description>
         </Card.Description>
-      </Card.Content>
-      {
-      currentUser? (
-      <Card.Content extra>
-        <div className='ui two buttons'>
-        <Button basic color='teal' onClick={fetchingCrypto}>
-            <CryptoDetails cryptoData={cryptoData} />
-        </Button>
-        <Button onClick={() =>updateWatch(currentUser)} basic color='red'>
-            Watchlist
-        </Button>
-    </div>
-    </Card.Content>):
-      
+    </Card.Content>
+        { currentUser? (
+        <Card.Content extra>
+            <div className='ui buttons'>
+                {   cryptoData? (
+                        <Button basic color='teal' onClick={fetchingCrypto}>
+                            <CryptoDetails currentUser={currentUser} cryptoData={cryptoData} />
+                        </Button>
+                    ):(null)
+                }
+                <Button onClick={createCrypto} basic color='red'>
+                    Create 
+                </Button>
+            </div>
+        </Card.Content>):
+        
     <Card.Content extra>
     Log In for Full Functionality
     </Card.Content>

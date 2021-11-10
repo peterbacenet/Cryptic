@@ -1,10 +1,10 @@
 import React from 'react'
-import { Button, Header, Image, Form, Modal } from 'semantic-ui-react'
-import { useState, useEffect } from 'react';
+import { Button, Header, Form, Modal } from 'semantic-ui-react'
+import { useState} from 'react';
 
 function Authentication (props) {
 // authentication should be a modal
-    const {currentUser, setCurrentUser, watchlist, setWatchlist} = props;
+    const { setCurrentUser, setWatchlist} = props;
     const [open, setOpen] = React.useState(false)
     // const [authChecked, setAuthChecked] = useState(false)
     const [signUp, setSignUp] = useState(false)
