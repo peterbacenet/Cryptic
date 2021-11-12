@@ -12,19 +12,8 @@ const {cryptoData, currentUser} = props;
 const [bulletData, setBulletData] = useState([])
 const [hasBulletins, setHasBulletins] = useState(false)
 const [content, setContent] = useState("")
-
-function organizedBulletins() { 
-        cryptoData.bulletins? (cryptoData.bulletins.map((bulletin) => (
-        console.log("organized bullets fired"),
-        <BulletinContainer bulletin={bulletin} />
-        // fetch(`/bulletins/crypto/${cryptoData.id}`)
-        // .then((r) => r.json())
-        // .then(data => (
-        //     console.log(data),
-        //     setBulletData(bulletData),
-        //     setHasBulletins(true)
-        ))):(console.log("No Bulletins!"))
-    }
+const [viewBulletins, setViewBulletins] = useState(false)
+const [bulletForm, setBulletForm] = useState(false)
 
 function handleComment(e){
     // e.preventDefault();
@@ -38,22 +27,35 @@ function handleComment(e){
 let generateComs = cryptoData.comments ?(
     cryptoData.comments.map(((comment) =>  {
         return (
-                <Card>
+            <div>
+                        <Card>
                         <Card.Content>
                         <Header> {comment.content} </Header>
-                        <Button onClick={() => setCommentForm(!commentForm)} color='red'> Add Comment </Button>
+                        <Button onClick={() => setCommentForm(!commentForm)} color='green'> Add Comment </Button>
                         <button className="ui button" onClick={() => setViewComments(!viewComments)}> Close Form </button>
                         </Card.Content>
-                </Card> )}))):(
-
-                <Card>
-                        <CardContent>
-                        <Header> Add a comment..  </Header>
-                            <Button onClick={() => setCommentForm(!commentForm)} color='red'> Add Comment </Button>
-                            {/* <button className="ui button" onClick={() => setViewComments(!viewComments)}> Close Form </button> */}
-                        </CardContent>
                 </Card>
-                )
+            <br/>
+            </div>
+                )}))):(null)
+
+
+
+let generateBullets = cryptoData.bulletins ? (
+    cryptoData.bulletins.map(((bullet) =>  {
+    return (
+        <div>
+                    <Card>
+                    <Card.Content>
+                    <Header> {bullet.content} </Header>
+                    <Button onClick={() => setCommentForm(!commentForm)} color='yellow'> Add Comment </Button>
+                    <button className="ui button" onClick={() => setViewBulletins(!viewBulletins)}> Close Form </button>
+                    </Card.Content>
+            </Card>
+        <br/>
+        </div>
+)}))):(null)
+
 
 function posting(newComment){
     console.log(newComment)
@@ -84,16 +86,34 @@ return(
             <br/>
 
             <Button onClick={() => setViewComments(!viewComments)} basic color='blue'> View Comments </Button>
+            <Button onClick={() => setViewBulletins(!viewBulletins)} basic color='green'> View Bulletins </Button>
         </Modal.Content>):(
         <Modal.Content>
             Not added to server!
         </Modal.Content>
         )
-    }
-    {hasBulletins? (<Modal.Content> <BulletinContainer bulletin={bulletData} currentUser={currentUser}/> </Modal.Content> ):(null)}
+        }
+    {/* {hasBulletins? (<Modal.Content> <BulletinContainer bulletin={bulletData} currentUser={currentUser}/> </Modal.Content> ):(null)} */}
+    { viewComments? ([generateComs]):(
+        <Card>
+        <CardContent>
+        <Header> Add a comment..  </Header>
+            <Button onClick={() => setCommentForm(!commentForm)} color='red'> Add Comment </Button>
+            {/* <button className="ui button" onClick={() => setViewComments(!viewComments)}> Close Form </button> */}
+        </CardContent>
+        </Card>
+    )}
+    <br/>
 
-    { viewComments? ([generateComs]):(null)}
-<br/>
+{ viewBulletins? ([generateBullets]):(
+    <Card>
+    <CardContent>
+    <Header> Add a bulletin..  </Header>
+        <Button onClick={() => setBulletForm(!bulletForm)} color='blue'> Add Bulletin </Button>
+        {/* <button className="ui button" onClick={() => setViewComments(!viewComments)}> Close Form </button> */}
+    </CardContent>
+    </Card>
+)}
 
 {
     commentForm? (
