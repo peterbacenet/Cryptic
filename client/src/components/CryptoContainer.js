@@ -2,19 +2,21 @@ import { Card, Image, Button } from 'semantic-ui-react'
 import { useState, useEffect } from 'react';
 import CryptoDetails from './CryptoDetails'
 function CryptoContainer (props) {
-const {crypto, watchlist, setWatchlist, currentUser} = props;
+const {crypto,currentUser} = props;
 const [cryptoData, setCryptoData] = useState([])
 
-function fetchingCrypto() {
-    // createCrypto()
-    fetch(`/crypto/${crypto.T}`)
-    .then((r) => r.json())
-    .then(data => {
-        setCryptoData(data)
-        console.log(cryptoData)
-});
-}
-
+// patches watchlist to include clicked crypto, triggers create crypto
+function handleWatch() {
+    //post to create a new watchlist attached to current user, validate uniqueness of current user 
+    // patch the created watchlist to add to it. 
+    console.log(crypto.T)
+    currentUser.watchlists[0].list.push(crypto)
+    console.log(currentUser)
+   
+    // console.log(currentUser)
+    // createCrypto();
+}   
+//creates crypto record in database
 function createCrypto() {
     // console.log(crypto)
     fetch(`/cryptos`, {
@@ -31,27 +33,19 @@ function createCrypto() {
             else
             console.log("Could Not Create")
     })
-    fetchingCrypto();
+}
+//loads crypto details using databse record
+function fetchingCrypto() {
+    // createCrypto()
+    fetch(`/crypto/${crypto.T}`)
+    .then((r) => r.json())
+    .then(data => {
+        setCryptoData(data)
+        console.log(cryptoData)
+});
 }
 
-function updateWatch() {
-        watchlist.push({
-            T: crypto.T,
-            c: crypto.c,
-        })
-        fetch(`/users/${currentUser.id}`, {
-        credentials: 'include',
-        method: "PATCH",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            watchlist: watchlist
-        })
-        }).then(
-        console.log(currentUser),
-        )
-    };
+
     return (
         <div className="cards">
             <Card>
@@ -66,14 +60,16 @@ function updateWatch() {
         { currentUser? (
         <Card.Content extra>
             <div className='ui buttons'>
+            // if cryptoData record exists... show button otherwise null
                 {   cryptoData? (
                         <Button basic color='teal' onClick={fetchingCrypto}>
                             <CryptoDetails currentUser={currentUser} cryptoData={cryptoData} />
                         </Button>
                     ):(null)
                 }
-                <Button onClick={createCrypto} basic color='red'>
-                    Create 
+            // add to watchlist array and creates record of cryptoData
+                <Button onClick={handleWatch} basic color='red'>
+                    Watchlist
                 </Button>
             </div>
         </Card.Content>):

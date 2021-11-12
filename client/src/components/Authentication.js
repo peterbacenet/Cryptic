@@ -4,7 +4,7 @@ import { useState} from 'react';
 
 function Authentication (props) {
 // authentication should be a modal
-    const { setCurrentUser, setWatchlist} = props;
+    const { setCurrentUser} = props;
     const [open, setOpen] = React.useState(false)
     // const [authChecked, setAuthChecked] = useState(false)
     const [signUp, setSignUp] = useState(false)
@@ -28,7 +28,6 @@ console.log(name, password, confirmation)
                 console.log(user)
                 setOpen(false)
                 setCurrentUser(user)
-                setWatchlist(user.watchlist)
                 
                 })
             } else {
@@ -55,7 +54,6 @@ console.log(name, password, confirmation)
             if (res.ok) {
                 res.json().then(user => {
                     setCurrentUser(user)
-                    setWatchlist(user.watchlist)
                     console.log(user)
                     setOpen(false)
                 })
@@ -76,7 +74,7 @@ console.log(name, password, confirmation)
         <Modal.Content image>
             {signUp? (
                 <Modal.Description>
-                <Header labelPosition="right">Sign Up</Header>
+                <Header>Sign Up</Header>
                 <p>
                     <label htmlFor="name">
                         Name

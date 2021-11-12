@@ -5,9 +5,9 @@ function CommentContainer(props){
     console.log(comments)
     return(
       <Card>
+      <Header> Crypto Comment for: {comments.crypto} </Header>
       <Card.Content>
         {comments.content}
-        CRYPTO: {comments.crypto}
     {
       currentUser? (
       <Card.Content extra>

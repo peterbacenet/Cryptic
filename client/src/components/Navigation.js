@@ -8,7 +8,7 @@ import Authentication from './Authentication';
 
 
 function Navigation (props) {
-const {currentUser, setCurrentUser, watchlist, setWatchlist} = props;
+const {currentUser, setCurrentUser} = props;
 
     const linkStyles = {
         paddingtop: "5px",
@@ -62,7 +62,9 @@ function handleLogOut(){
                             </Menu.Item>
                         ):(
                         <Menu.Item style={linkStyles} >
-						<Authentication watchlist={watchlist} setWatchlist={setWatchlist} currentUser={currentUser} setCurrentUser={setCurrentUser}/>
+						<Authentication 
+                        // watchlist={watchlist} setWatchlist={setWatchlist} 
+                        currentUser={currentUser} setCurrentUser={setCurrentUser}/>
                         </Menu.Item>)}
                 </Menu>
 

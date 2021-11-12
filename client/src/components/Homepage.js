@@ -14,7 +14,7 @@ function Homepage ({currentUser, setCurrentUser}) {
 const [marketData, setMarketData] = useState([])
 const [input, setInput] = useState("")
 const [allBullets, setAllBullets] = useState([])
-const [watchlist, setWatchlist] = useState([])
+// const [watchlist, setWatchlist] = useState([])
 const rest = restClient("ozCbtJMUwHk31pXy7OhIeWbHzjytSflP");
 const date = "2021-11-05"
 // const featuredCrypto = marketData.find((data) => (data.T = "X:BTCUSD"))
@@ -47,8 +47,8 @@ const singleCrypto = filter.map((crypto) => (
         key={crypto.T}
         currentUser={currentUser} 
         crypto={crypto}
-        watchlist={watchlist}
-        setWatchlist={setWatchlist} />
+        // watchlist={watchlist} setWatchlist={setWatchlist} 
+        />
 ))
 // featured Crypto is Bitcoin
 
@@ -66,7 +66,7 @@ const createBulletins = allBullets.map((bullet) => (
     return (
         <div>
             <div className='ui menu'>
-                <Navigation watchlist={watchlist} setWatchlist={setWatchlist} currentUser={currentUser} setCurrentUser={setCurrentUser} />
+                <Navigation currentUser={currentUser} setCurrentUser={setCurrentUser} />
             </div>
                 <Switch>
 
