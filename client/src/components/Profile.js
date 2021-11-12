@@ -27,19 +27,19 @@ const organizedComments = currentUser.comments.map((comments)=> (
     return (
         <>
         <h1>Profile </h1> 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gridGap: 5 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gridGap: 5 }}>
             <div className="column">
-                <h2> {currentUser.name}'s Watchlist </h2>
+                <h2> {currentUser.name}'s Watchlist: </h2>
                     {organziedWatch}
             </div>
-           <div className="column">
-            <h2> {currentUser.name}'s Activity </h2>
-                <h3> Posted Bulletins: </h3>
-                <p> {organizedBulletins} </p>
-                <h3> Posted Comments: </h3>
-                <p> {organizedComments} </p>
-           </div>
-            
+        <div className="column">
+            <h2> Posted Bulletins: </h2>
+            <p> {organizedBulletins} </p>
+        </div>
+        <div className="column">
+        <h2> Posted Comments: </h2>
+            <p> {organizedComments} </p>
+        </div>
             <br/>
         </div>  
         </>

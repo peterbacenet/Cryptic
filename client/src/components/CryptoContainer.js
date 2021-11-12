@@ -41,7 +41,7 @@ function fetchingCrypto() {
     .then((r) => r.json())
     .then(data => {
         setCryptoData(data)
-        console.log(cryptoData)
+        console.log(data)
 });
 }
 

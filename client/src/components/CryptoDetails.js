@@ -34,31 +34,55 @@ function handleComment(e){
         crypto_id: cryptoData.id
     })
 }
+
+let generateComs = cryptoData.comments ?(
+    cryptoData.comments.map(((comment) =>  {
+        return (
+                <Card>
+                        <Card.Content>
+                        <Header> {comment.content} </Header>
+                        <Button onClick={() => setCommentForm(!commentForm)} color='red'> Add Comment </Button>
+                        <button className="ui button" onClick={() => setViewComments(!viewComments)}> Close Form </button>
+                        </Card.Content>
+                </Card> )}))):(
+
+                <Card>
+                        <CardContent>
+                        <Header> Add a comment..  </Header>
+                            <Button onClick={() => setCommentForm(!commentForm)} color='red'> Add Comment </Button>
+                            {/* <button className="ui button" onClick={() => setViewComments(!viewComments)}> Close Form </button> */}
+                        </CardContent>
+                </Card>
+                )
+
 function posting(newComment){
     console.log(newComment)
     fetch('/comments', {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newComment),
-    })
-      .then(resp => resp.json())
-      .then(
-        console.log("Added Console to DB"),
-        setContent("")
-      )
+    method: "POST",
+    headers: {
+    "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newComment),
+})
+    .then(resp => resp.json())
+    .then(
+    console.log("Added Console to DB"),
+    setContent(""),
+    setCommentForm(!commentForm)
+    )
 }
-    return(
+
+return(
         <Modal
             onClose={() => setOpen(false)}
             onOpen={() => setOpen(true)}
             open={open}
             trigger={<p> Details </p>} >
-        {cryptoData?(
+        {cryptoData.comments?(
         <Modal.Content>
             Hello World {cryptoData.data}
             <br/>
+
             <Button onClick={() => setViewComments(!viewComments)} basic color='blue'> View Comments </Button>
         </Modal.Content>):(
         <Modal.Content>
@@ -68,32 +92,7 @@ function posting(newComment){
     }
     {hasBulletins? (<Modal.Content> <BulletinContainer bulletin={bulletData} currentUser={currentUser}/> </Modal.Content> ):(null)}
 
-
-
-    {
-    viewComments? (
-    (()=> {
-        if(cryptoData.comments[0]) {
-            return <Card>
-                    <CardContent>
-                    <Header> {cryptoData.comments[0].content} </Header>
-                    <Button onClick={() => setCommentForm(!commentForm)} color='red'> Add Comment </Button>
-                    <button className="ui button" onClick={() => setViewComments(!viewComments)}> Close Form </button>
-                    </CardContent>
-                   
-                </Card>;
-        } else {
-            return <Card>
-                <CardContent>
-                <Header> No comments here yet!  </Header>
-                    <Button onClick={() => setCommentForm(!commentForm)} color='red'> Add Comment </Button>
-                    <button className="ui button" onClick={() => setViewComments(!viewComments)}> Close Form </button>
-                </CardContent>
-            </Card>
-        }
-    })()
-    ):(null)
-}
+    { viewComments? ([generateComs]):(null)}
 <br/>
 
 {

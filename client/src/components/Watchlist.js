@@ -4,6 +4,7 @@ function Watchlist(props){
     const {crypto} = props
     console.log(crypto)
     return( 
+        <div>
         <Card padding="20px">
             <Card.Content>
             <Header> {crypto.T} </Header>
@@ -14,6 +15,9 @@ function Watchlist(props){
             <p> Total Volume - {crypto.v} </p>
             </Card.Content>
         </Card>
+        <br/>
+        </div>
+       
     )
 }
 export default Watchlist;

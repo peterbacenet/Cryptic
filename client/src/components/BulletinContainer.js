@@ -35,7 +35,9 @@ function BulletinContainer(props){
     .then((r) => r.json())
     .then(data => {
         setTickerID(data.id)
-        console.log("set ticker id")
+        console.log(data)
+        setContent("")
+        setTicker("")
   });
   }
 
@@ -73,16 +75,15 @@ function BulletinContainer(props){
         (<Card.Content extra> Log In for Full Functionality </Card.Content>)
       }
       </Card.Content>
-    </Card>
     
-  <br/>
-
+    </Card>
+    <br/>
     {
       showForm? (
+        <div>
         <Card>
-          <br/> 
-          <Card.Header padding="10px"> <h2> Bulletin Form </h2> </Card.Header>
         <Card.Content>
+        <Card.Header padding="10px"> <h2> Bulletin Form </h2> </Card.Header>
         <Form onSubmit={handleBulletin}>
           <input name="tickerholder" onChange={(e) => setTicker(e.target.value)} value={ticker} placeholder="ticker?" type="text" />
           <input name="contentholder" onChange={(e) => setContent(e.target.value)} value={content} placeholder="content" type="text" />
@@ -91,12 +92,10 @@ function BulletinContainer(props){
         </Form>
         </Card.Content>
         </Card> 
+        <br/>
+        </div>
       ):(null)
     }
-
-<br/>
-
-<br/>
     </div>
   )
 }

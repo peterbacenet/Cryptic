@@ -1,31 +1,31 @@
 import { Container, Header, Card, Button, CardContent } from 'semantic-ui-react'
 function CommentContainer(props){
     const {comments, currentUser} = props;
-    console.log(currentUser)
     console.log(comments)
+
+    //fetch comments with user_id and display
+
     return(
-      <Card>
-      <Header> Crypto Comment for: {comments.crypto} </Header>
+      <div>
+        <Card>
       <Card.Content>
+      <Header> Comment created on: {comments.crypto.data} </Header>
         {comments.content}
-    {
+    {/* {
       currentUser? (
-      <Card.Content extra>
-        {/* <div className='ui two buttons'>
-        <Button basic color='teal'>
-          Add Comment
-        </Button>
-        <Button basic color='red'>
-          Button 2
-        </Button>
-    </div> */}
-    </Card.Content>):
+            <div className='ui two buttons'>
+              <Button basic color='teal'>
+                Create Comment
+              </Button>
+            </div> ):
     <Card.Content extra>
     Log In for Full Functionality
     </Card.Content>
-    }
+    } */}
   </Card.Content>
   </Card>
+  <br/>
+      </div>
     )
 }
 export default CommentContainer;
