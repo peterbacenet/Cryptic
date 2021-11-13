@@ -1,16 +1,16 @@
 import React from 'react'
-import { Button, Header, Card, Image, Form, Modal, ModalContent, CardContent } from 'semantic-ui-react'
-import { useState, useEffect } from 'react';
-import BulletinContainer from './BulletinContainer'
-import CommentContainer from './CommentContainer'
+import { Button, Header, Card, Form, Modal, CardContent } from 'semantic-ui-react'
+import { useState} from 'react';
+// import BulletinContainer from './BulletinContainer'
+// import CommentContainer from './CommentContainer'
 
 function CryptoDetails(props) {
 const [open, setOpen] = React.useState(false)
 const [commentForm, setCommentForm] = useState(false)
 const [viewComments, setViewComments] = useState(false)
 const {cryptoData, currentUser} = props;
-const [bulletData, setBulletData] = useState([])
-const [hasBulletins, setHasBulletins] = useState(false)
+// const [bulletData, setBulletData] = useState([])
+// const [hasBulletins, setHasBulletins] = useState(false)
 const [content, setContent] = useState("")
 const [viewBulletins, setViewBulletins] = useState(false)
 const [bulletForm, setBulletForm] = useState(false)

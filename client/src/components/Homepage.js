@@ -1,12 +1,12 @@
-import { polygonClient, restClient, websocketClient } from "@polygon.io/client-js";
+// import { restClient } from "@polygon.io/client-js";
 import { useState, useEffect } from 'react';
 import { Switch, Route} from 'react-router-dom'
 import Navigation from './Navigation'
 import CryptoContainer from "./CryptoContainer";
 import Profile from "./Profile"
 import Currencies from "./Currencies"  
-import BulletinContainer from "./BulletinContainer";
-import FeaturedContainer from "./FeaturedContainer";
+// import BulletinContainer from "./BulletinContainer";
+// import FeaturedContainer from "./FeaturedContainer";
 import Authentication from "./Authentication";
 
 
@@ -15,7 +15,7 @@ const [marketData, setMarketData] = useState([])
 const [input, setInput] = useState("")
 const [allBullets, setAllBullets] = useState([])
 // const [watchlist, setWatchlist] = useState([])
-const rest = restClient("ozCbtJMUwHk31pXy7OhIeWbHzjytSflP");
+// const rest = restClient("ozCbtJMUwHk31pXy7OhIeWbHzjytSflP");
 const date = "2021-11-05"
 // const featuredCrypto = marketData.find((data) => (data.T = "X:BTCUSD"))
 const filter = ( marketData.filter((data) => input === "" || data.T.toLowerCase().includes(input.toLowerCase()) ))
@@ -24,7 +24,6 @@ useEffect( () => {
     fetch(`https://api.polygon.io/v2/aggs/grouped/locale/global/market/crypto/${date}?adjusted=true&apiKey=ozCbtJMUwHk31pXy7OhIeWbHzjytSflP`)
     .then((r) => r.json())
     .then(data => {
-        console.log(data)
     setMarketData(data.results)
     
 })
@@ -37,7 +36,7 @@ useEffect( () => {
     .then(data => {
     allBullets.push(data)
 })
-}, [])
+}, [setAllBullets])
 
 if (currentUser) {
 console.log(currentUser)
@@ -47,7 +46,6 @@ const singleCrypto = filter.map((crypto) => (
         key={crypto.T}
         currentUser={currentUser} 
         crypto={crypto}
-        // watchlist={watchlist} setWatchlist={setWatchlist} 
         />
 ))
 // featured Crypto is Bitcoin
@@ -56,12 +54,12 @@ const singleCrypto = filter.map((crypto) => (
 
 
 
-const createBulletins = allBullets.map((bullet) => (
-    <BulletinContainer 
-        bulletin={bullet}
-        currentUser={currentUser}
-    /> 
-))
+// const createBulletins = allBullets.map((bullet) => (
+//     <BulletinContainer 
+//         bulletin={bullet}
+//         currentUser={currentUser}
+//     /> 
+// ))
 
     return (
         <div>

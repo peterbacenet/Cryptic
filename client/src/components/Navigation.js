@@ -1,7 +1,7 @@
-import { Input, Menu } from 'semantic-ui-react'
-import React, { useState } from 'react'
-import { Switch, Route, NavLink } from 'react-router-dom'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { Menu } from 'semantic-ui-react'
+import React from 'react'
+// import { Switch, Route, NavLink } from 'react-router-dom'
+// import { BrowserRouter as Router } from 'react-router-dom'
 import { Link } from "react-router-dom";
 import { Header, Icon} from 'semantic-ui-react';
 import Authentication from './Authentication';

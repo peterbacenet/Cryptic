@@ -1,5 +1,5 @@
-import { Card, Image, Button } from 'semantic-ui-react'
-import { useState, useEffect } from 'react';
+import { Card, Button } from 'semantic-ui-react'
+import { useState} from 'react';
 import CryptoDetails from './CryptoDetails'
 function CryptoContainer (props) {
 const {crypto,currentUser} = props;
@@ -11,10 +11,21 @@ function handleWatch() {
     // patch the created watchlist to add to it. 
     console.log(crypto.T)
     currentUser.watchlists[0].list.push(crypto)
+    console.log(currentUser.watchlists[0].list)
+fetch(`/watchlists/${currentUser.id}`, {
+    method: "PATCH",
+    headers: {
+        "Content-type":"application/json"
+    },
+    body: JSON.stringify({
+        list: currentUser.watchlists[0].list
+    })
+}).then(res => {
+    if(res.ok)
     console.log(currentUser)
-   
-    // console.log(currentUser)
-    // createCrypto();
+    else
+    console.log("Patch failed")
+})
 }   
 //creates crypto record in database
 function createCrypto() {

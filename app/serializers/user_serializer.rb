@@ -3,5 +3,4 @@ class UserSerializer < ActiveModel::Serializer
   has_many :bulletins
   has_many :comments
   has_many :watchlists
-  # has_many :watchlists
 end

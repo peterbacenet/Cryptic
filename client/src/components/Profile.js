@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
-import { Card, Header, CardContent } from 'semantic-ui-react'
+// import { useEffect } from 'react';
+// import { Card, Header, CardContent } from 'semantic-ui-react'
 import BulletinContainer from './BulletinContainer';
 import CommentContainer from './CommentContainer';
-import CryptoContainer from './CryptoContainer';
+// import CryptoContainer from './CryptoContainer';
 import Watchlist from './Watchlist';
 
 function Profile ({currentUser}) {
@@ -17,6 +17,7 @@ const organziedWatch = currentUser.watchlists[0].list.map((crypto) => (
 const organizedBulletins = currentUser.bulletins.map((bulletin) => (
         <BulletinContainer
         bulletin={bulletin}
+        key={bulletin.id}
         currentUser={currentUser}
         />
     ))
@@ -34,11 +35,11 @@ const organizedComments = currentUser.comments.map((comments)=> (
             </div>
         <div className="column">
             <h2> Posted Bulletins: </h2>
-            <p> {organizedBulletins} </p>
+             {organizedBulletins}
         </div>
         <div className="column">
         <h2> Posted Comments: </h2>
-            <p> {organizedComments} </p>
+            {organizedComments}
         </div>
             <br/>
         </div>  

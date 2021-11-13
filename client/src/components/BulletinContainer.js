@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Container, Header, Card, Button, Form, CardContent } from 'semantic-ui-react'
-import HeaderSubHeader from "semantic-ui-react/dist/commonjs/elements/Header/HeaderSubheader";
+import { Header, Card, Button, Form } from 'semantic-ui-react'
+// import HeaderSubHeader from "semantic-ui-react/dist/commonjs/elements/Header/HeaderSubheader";
 
 function BulletinContainer(props){
   const {bulletin, currentUser} = props;
@@ -9,6 +9,7 @@ function BulletinContainer(props){
   const [content, setContent] = useState("")
   const [ticker, setTicker] = useState("")
   const [tickerID, setTickerID] = useState()
+  const [title, setTitle] = useState("")
 
   const linkStyles = {
     paddingtop: "5px",
@@ -22,8 +23,10 @@ function BulletinContainer(props){
   //creates bulletin object successfully
   function handleBulletin(e) {
     e.preventDefault();
+    console.log(tickerID)
     handleTicker();
     handlePost ({
+      title: title,
       content: content,
       user_id: currentUser.id,
       crypto_id: tickerID
@@ -36,8 +39,6 @@ function BulletinContainer(props){
     .then(data => {
         setTickerID(data.id)
         console.log(data)
-        setContent("")
-        setTicker("")
   });
   }
 
@@ -53,7 +54,9 @@ function BulletinContainer(props){
     })
       .then(resp => resp.json())
       .then(
-        console.log("Added Bulletin to DB")
+        console.log("Added Bulletin to DB"),
+        setContent(""),
+        setTicker("")
       )
   }
 
@@ -62,8 +65,9 @@ function BulletinContainer(props){
 
     <Card>
       <Card.Content>
-        <Header> Crypto Bulletin for {bulletin.crypto.data} </Header>
-        <HeaderSubHeader> Created by: {bulletin.user.name} </HeaderSubHeader>
+        <Header> {bulletin.title} </Header>
+        Creator: {bulletin.user.name} 
+        <br/> Crypto: {bulletin.crypto.data}
         <br/> {bulletin.content} <br/>
       {
         currentUser? (
@@ -86,6 +90,7 @@ function BulletinContainer(props){
         <Card.Header padding="10px"> <h2> Bulletin Form </h2> </Card.Header>
         <Form onSubmit={handleBulletin}>
           <input name="tickerholder" onChange={(e) => setTicker(e.target.value)} value={ticker} placeholder="ticker?" type="text" />
+          <input name="titleholder" onChange={(e) => setTitle(e.target.value)} value={title} placeholder="bulletin title.." type="text" />
           <input name="contentholder" onChange={(e) => setContent(e.target.value)} value={content} placeholder="content" type="text" />
           <button className="ui button" type="submit"> Submit Bulletin </button>
           <button className="ui button" onClick={() =>setShowForm(!showForm)}> Close Form </button>
