@@ -11,15 +11,6 @@ function BulletinContainer(props){
   const [tickerID, setTickerID] = useState()
   const [title, setTitle] = useState("")
 
-  const linkStyles = {
-    paddingtop: "5px",
-    display: "inline-block",
-    width: "100px",
-    padding: "5px",
-    margin: "0 6px 6px",
-    background: "magenta",
-    textDecoration: "none",
-  }
   //creates bulletin object successfully
   function handleBulletin(e) {
     e.preventDefault();
@@ -32,8 +23,8 @@ function BulletinContainer(props){
       crypto_id: tickerID
     })
   }
+
   function handleTicker() {
-    // createCrypto()
     fetch(`/crypto/${ticker}`)
     .then((r) => r.json())
     .then(data => {
@@ -56,6 +47,7 @@ function BulletinContainer(props){
       .then(
         console.log("Added Bulletin to DB"),
         setContent(""),
+        setTitle(""),
         setTicker("")
       )
   }
@@ -72,8 +64,10 @@ function BulletinContainer(props){
       {
         currentUser? (
         <Card.Content extra>
+          <br/>
           <div className='ui three buttons'>
-            <Button onClick={() => setShowForm(!showForm)} basic color='teal'> Create Bulletin </Button>
+            <Button onClick={() => setShowForm(!showForm)} color='teal'> Create Bulletin </Button>
+            <Button color='red'> Delete </Button>
           </div>
         </Card.Content>):
         (<Card.Content extra> Log In for Full Functionality </Card.Content>)

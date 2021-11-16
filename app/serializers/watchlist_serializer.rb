@@ -1,5 +1,4 @@
 class WatchlistSerializer < ActiveModel::Serializer
-  attributes :id, :list
+  attributes :id, :data, :T, :c, :o, :v, :h, :l 
   has_one :user
-  # has_many :cryptos
 end

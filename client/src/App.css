@@ -47,6 +47,11 @@
 }
 .ui.secondary.menu {
   padding-top: 10px;
+  height: 30px;
+  align-items: center;
+  text-align: center;
+  align-content: center;
+  justify-content: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-style: oblique;
   font-weight: bolder;
@@ -86,4 +91,66 @@ max-width: 500px;
 }
 .bulletin Button{
   background-color: magenta;
+}
+
+a.item {
+  height: 28.18px
+}
+
+.details{
+  margin: auto;
+}
+
+ui.modal {
+  margin: auto;
+}
+
+/* .main{
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+} */
+
+.newss {
+  padding: 5px;
+  flex-wrap:wrap;
+  display: flex;
+  flex-flow: wrap;
+  justify-content: space-between  ;
+  
+}
+
+.news{
+  max-width: 300px;
+  min-width: 300px;
+}
+
+.detailbutton{
+  flex-wrap: wrap;
+}
+
+.details{
+  margin: auto;
+  border-top: 8px solid rgb(9, 255, 0);
+  border-bottom: 8px solid rgb(9, 255, 0);
+  border-left: 8px solid rgb(9, 255, 0);
+  border-right: 8px solid rgb(9, 255, 0);
+  border-radius: 5px;
+  /* text-align: center; */
+  background-color: rgb(236, 255, 132)
+}
+
+.detailbutton{
+  margin: auto;
+  align-content: center;
+  align-items: center;
+}
+
+.titlehead{
+
+}
+.detailcard{
+  align-items: baseline;
+  align-content: flex-start;
+  flex-wrap: wrap;
 }

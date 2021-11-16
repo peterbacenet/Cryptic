@@ -6,19 +6,27 @@ const {crypto,currentUser} = props;
 const [cryptoData, setCryptoData] = useState([])
 
 // patches watchlist to include clicked crypto, triggers create crypto
-function handleWatch() {
-    //post to create a new watchlist attached to current user, validate uniqueness of current user 
-    // patch the created watchlist to add to it. 
-    console.log(crypto.T)
-    currentUser.watchlists[0].list.push(crypto)
-    console.log(currentUser.watchlists[0].list)
-fetch(`/watchlists/${currentUser.id}`, {
-    method: "PATCH",
+function handleWatch() { 
+    console.log(crypto)
+    currentUser.watchlists.push(crypto)
+    console.log(currentUser.watchlists)
+fetch(`/watchlists/`, {
+    method: "POST",
     headers: {
         "Content-type":"application/json"
     },
     body: JSON.stringify({
-        list: currentUser.watchlists[0].list
+            user_id: currentUser.id,
+            data: crypto.T,
+            T: crypto.T,
+            c: crypto.c,
+            h: crypto.h,
+            l: crypto.l,
+            n: crypto.n,
+            o: crypto.o,
+            t: crypto.t,
+            v: crypto.v,
+            vw: crypto.vw
     })
 }).then(res => {
     if(res.ok)
@@ -36,11 +44,21 @@ function createCrypto() {
             "Content-Type":"application/json"
         },
         body: JSON.stringify({
-            data: crypto.T
+            data: crypto.T,
+            T: crypto.T,
+            c: crypto.c,
+            h: crypto.h,
+            l: crypto.l,
+            n: crypto.n,
+            o: crypto.o,
+            t: crypto.t,
+            v: crypto.v,
+            vw: crypto.vw
+
         })
     }).then(res => {
-        if(res.ok)
-            console.log("Creation Success")
+        if(res.ok)  
+            fetchingCrypto()
             else
             console.log("Could Not Create")
     })
@@ -72,11 +90,15 @@ function fetchingCrypto() {
         <Card.Content extra>
             <div className='ui buttons'>
             // if cryptoData record exists... show button otherwise null
-                {   cryptoData? (
+                {   cryptoData ? (
                         <Button basic color='teal' onClick={fetchingCrypto}>
-                            <CryptoDetails currentUser={currentUser} cryptoData={cryptoData} />
+                            <CryptoDetails crypto={crypto} currentUser={currentUser} cryptoData={cryptoData} />
                         </Button>
-                    ):(null)
+                    ):(
+                        <Button color = 'blue' onClick={createCrypto}>
+                            Create
+                        </Button>
+                    )
                 }
             // add to watchlist array and creates record of cryptoData
                 <Button onClick={handleWatch} basic color='red'>

@@ -10,7 +10,7 @@ class WatchlistsController < ApplicationController
     end
 
     def create
-        new_watchlist = Watchlist.create(watchlist.params)
+        new_watchlist = Watchlist.create(watchlist_params)
         render json: new_watchlist, status: :created
     end
 
@@ -24,6 +24,6 @@ class WatchlistsController < ApplicationController
     private
 
     def watchlist_params
-        params.permit(:id, :user_id, list: [:list, :T, :v, :vw, :o, :c, :h, :l, :t, :n])
+        params.permit(:id, :data, :user_id, :T, :v, :vw, :o, :c, :h, :l, :t, :n)
     end
 end

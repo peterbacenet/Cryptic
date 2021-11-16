@@ -5,6 +5,7 @@ import Navigation from './Navigation'
 import CryptoContainer from "./CryptoContainer";
 import Profile from "./Profile"
 import Currencies from "./Currencies"  
+import News from "./News"
 // import BulletinContainer from "./BulletinContainer";
 // import FeaturedContainer from "./FeaturedContainer";
 import Authentication from "./Authentication";
@@ -14,6 +15,7 @@ function Homepage ({currentUser, setCurrentUser}) {
 const [marketData, setMarketData] = useState([])
 const [input, setInput] = useState("")
 const [allBullets, setAllBullets] = useState([])
+const [news, setNews] = useState([])
 // const [watchlist, setWatchlist] = useState([])
 // const rest = restClient("ozCbtJMUwHk31pXy7OhIeWbHzjytSflP");
 const date = "2021-11-05"
@@ -25,9 +27,9 @@ useEffect( () => {
     .then((r) => r.json())
     .then(data => {
     setMarketData(data.results)
-    
 })
 }, [])
+
 
 // auto load bulletins on load
 useEffect( () => { 
@@ -40,6 +42,11 @@ useEffect( () => {
 
 if (currentUser) {
 console.log(currentUser)
+    fetch(`/watchlists/${currentUser.id}`)
+    .then((r) => r.json())
+    .then(data => {
+        console.log(data)
+    })
 } 
 const singleCrypto = filter.map((crypto) => (
     <CryptoContainer 
@@ -48,19 +55,18 @@ const singleCrypto = filter.map((crypto) => (
         crypto={crypto}
         />
 ))
-// featured Crypto is Bitcoin
-
-// filtered Crypto based on searchbar in currencies
-
-
-
-// const createBulletins = allBullets.map((bullet) => (
-//     <BulletinContainer 
-//         bulletin={bullet}
-//         currentUser={currentUser}
-//     /> 
-// ))
-
+//fetch news
+useEffect( () => {
+    fetch('https://api.polygon.io/v2/reference/news?ticker=BTC&order=asc&limit=10&apiKey=ozCbtJMUwHk31pXy7OhIeWbHzjytSflP')
+    .then((r) => r.json())
+    .then(data => {setNews(data.results)})
+},[])
+// render news in containers
+console.log(news)
+const singleNews = news.map((article) => (
+    <News article={article}/>
+))
+console.log(news)
     return (
         <div>
             <div className='ui menu'>
@@ -69,10 +75,16 @@ const singleCrypto = filter.map((crypto) => (
                 <Switch>
 
                     <Route exact path ="/">
-                        <div className="main">
+                        <div className="titlehead">
+                            <br/>
                         {currentUser? (<h1> Welcome to Cryptic, {currentUser.name} </h1>): (<h1> Please Login for the Full Cryptic Experience </h1>)}
                         <p> This weeks featured crypto is Bitcoin </p>
                         <br/>
+                        </div>
+                        <br/>
+                        <div className="newss">
+                        {singleNews}
+                     
                         </div>
                     </Route>
 

@@ -17,6 +17,6 @@ class CryptosController < ApplicationController
     private
 
     def crypto_params
-        params.permit(:data)
+        params.permit(:data, :T, :c, :h, :l, :n, :o, :t, :v, :vw)
     end
 end

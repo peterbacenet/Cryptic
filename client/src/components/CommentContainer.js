@@ -11,17 +11,9 @@ function CommentContainer(props){
       <Card.Content>
       <Header> Comment created on: {comments.crypto.data} </Header>
         {comments.content}
-    {/* {
-      currentUser? (
-            <div className='ui two buttons'>
-              <Button basic color='teal'>
-                Create Comment
-              </Button>
-            </div> ):
-    <Card.Content extra>
-    Log In for Full Functionality
-    </Card.Content>
-    } */}
+        <br/>
+        <br/>
+        {currentUser.id === comments.user.id? (<Button color = "red"> Delete </Button>):(null)}
   </Card.Content>
   </Card>
   <br/>

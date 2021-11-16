@@ -6,7 +6,9 @@ function Currencies (props) {
 
     return (
         <div>
-            <h3>Market Data as of {date}  </h3>
+            <div className="titlehead">
+                <br/>
+            <h1>Market Data as of {date}  </h1>
             <div className="ui icon input">
                 <i className="search icon"></i>
                 <input 
@@ -14,7 +16,13 @@ function Currencies (props) {
                     placeholder="Search..." 
                     onChange={(e) => setInput(e.target.value)}
                 /> 
+                
             </div>
+            <br/><br/>
+            <br/>
+            </div>
+            
+           
             <div className="crypto">
             {singleCrypto}
             </div>

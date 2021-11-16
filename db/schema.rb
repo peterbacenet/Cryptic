@@ -61,7 +61,16 @@ ActiveRecord::Schema.define(version: 2021_11_11_161530) do
 
   create_table "watchlists", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.text "list", default: [], array: true
+    t.string "data"
+    t.string "T"
+    t.decimal "c"
+    t.decimal "h"
+    t.decimal "l"
+    t.decimal "n"
+    t.decimal "o"
+    t.decimal "t"
+    t.decimal "v"
+    t.decimal "vw"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_watchlists_on_user_id"

@@ -5,12 +5,14 @@ import CommentContainer from './CommentContainer';
 // import CryptoContainer from './CryptoContainer';
 import Watchlist from './Watchlist';
 
-function Profile ({currentUser}) {
+function Profile ({currentUser, watchlists}) {
     //fetch bulletins for user --> comes in with user
     //fetch watchlist for user --> comes in with user --> comes in as string 
     //fetch comments for user --> commes in with user -->
 
-const organziedWatch = currentUser.watchlists[0].list.map((crypto) => (
+    console.log(currentUser)
+
+const organizedWatch = currentUser.watchlists.map((crypto) => (
     <Watchlist crypto={crypto} />
 ))
 
@@ -27,17 +29,23 @@ const organizedComments = currentUser.comments.map((comments)=> (
     ))
     return (
         <>
-        <h1>Profile </h1> 
+        <div className="titlehead">
+            <br/>
+        <h1> Cryptic Activity</h1>
+        <br/> 
+        </div>
+       <br/>
+        
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gridGap: 5 }}>
             <div className="column">
                 <h2> {currentUser.name}'s Watchlist: </h2>
-                    {organziedWatch}
+                    {organizedWatch}
             </div>
         <div className="column">
             <h2> Posted Bulletins: </h2>
              {organizedBulletins}
         </div>
-        <div className="column">
+        <div padding='10px' className="column">
         <h2> Posted Comments: </h2>
             {organizedComments}
         </div>
