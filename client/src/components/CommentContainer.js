@@ -1,21 +1,30 @@
-import { Container, Header, Card, Button, CardContent } from 'semantic-ui-react'
+import {Header, Card, Button} from 'semantic-ui-react'
+import {useState} from 'react'
 function CommentContainer(props){
     const {comments, currentUser} = props;
-    console.log(comments)
-
-    //fetch comments with user_id and display
-
+    const [show, setShow] = useState(true)
+    function handleDelete(){
+      fetch(`/comments/${comments.id}`,{
+        method: "DELETE",
+        headers:{
+          "Content-Type" : "application/json"
+        }})
+        .then(setShow(!show))
+    }
     return(
       <div>
-        <Card>
-      <Card.Content>
-      <Header> Comment created on: {comments.crypto.data} </Header>
-        {comments.content}
-        <br/>
-        <br/>
-        {currentUser.id === comments.user.id? (<Button color = "red"> Delete </Button>):(null)}
-  </Card.Content>
-  </Card>
+        { show? (
+           <Card>
+           <Card.Content>
+           <Header> Comment created on: {comments.crypto.data} </Header>
+             {comments.content}
+             <br/>
+             <br/>
+             {currentUser.id === comments.user.id? (<Button onClick={handleDelete} color = "red"> Delete </Button>):(null)}
+       </Card.Content>
+       </Card>
+        ):(null)}
+       
   <br/>
       </div>
     )

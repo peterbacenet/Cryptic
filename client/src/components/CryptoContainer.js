@@ -2,12 +2,14 @@ import { Card, Button } from 'semantic-ui-react'
 import { useState} from 'react';
 import CryptoDetails from './CryptoDetails'
 function CryptoContainer (props) {
-const {crypto,currentUser} = props;
+const {crypto,currentUser, toggle, setToggle} = props;
 const [cryptoData, setCryptoData] = useState([])
+const [watch, setWatch] = useState(false)
 
 // patches watchlist to include clicked crypto, triggers create crypto
 function handleWatch() { 
     console.log(crypto)
+    setWatch(!watch)
     currentUser.watchlists.push(crypto)
     console.log(currentUser.watchlists)
 fetch(`/watchlists/`, {
@@ -31,6 +33,7 @@ fetch(`/watchlists/`, {
 }).then(res => {
     if(res.ok)
     console.log(currentUser)
+
     else
     console.log("Patch failed")
 })
@@ -92,7 +95,7 @@ function fetchingCrypto() {
             // if cryptoData record exists... show button otherwise null
                 {   cryptoData ? (
                         <Button basic color='teal' onClick={fetchingCrypto}>
-                            <CryptoDetails crypto={crypto} currentUser={currentUser} cryptoData={cryptoData} />
+                            <CryptoDetails toggle={toggle} setToggle={setToggle} crypto={crypto} currentUser={currentUser} cryptoData={cryptoData} />
                         </Button>
                     ):(
                         <Button color = 'blue' onClick={createCrypto}>
@@ -101,9 +104,9 @@ function fetchingCrypto() {
                     )
                 }
             // add to watchlist array and creates record of cryptoData
-                <Button onClick={handleWatch} basic color='red'>
+            { watch? (<Button> Added! </Button>):(<Button onClick={handleWatch} basic color='red'>
                     Watchlist
-                </Button>
+                </Button>)} 
             </div>
         </Card.Content>):
         

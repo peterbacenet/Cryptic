@@ -58,7 +58,7 @@ function handleLogOut(){
                         
                         {currentUser? (
                             <Menu.Item onClick={handleLogOut} name="logout" style={linkStyles} >
-                            Log Out
+                            <Link to="/"> Log Out </Link>
                             </Menu.Item>
                         ):(
                         <Menu.Item style={linkStyles} >

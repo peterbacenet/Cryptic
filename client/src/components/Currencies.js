@@ -1,8 +1,8 @@
 // import CryptoContainer from "./CryptoContainer";
-import {useState} from 'react'
+
 function Currencies (props) {
-    const {singleCrypto, input, setInput, date} = props;
-    // console.log(singleCrypto)
+    const {singleCrypto, setInput, date} = props;
+
 
     return (
         <div>

@@ -21,6 +21,12 @@ class WatchlistsController < ApplicationController
         render json: selected_watchlist, status: 200
     end
 
+    def destroy
+        selected_watchlist = Watchlist.find(params[:id])
+        selected_watchlist.destroy
+        render json: selected_watchlist, status: 200
+    end
+
     private
 
     def watchlist_params

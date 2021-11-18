@@ -8,12 +8,12 @@ function CryptoDetails(props) {
 const [open, setOpen] = React.useState(false)
 const [commentForm, setCommentForm] = useState(false)
 const [viewComments, setViewComments] = useState(false)
-const {cryptoData, crypto, currentUser} = props;
+const {cryptoData, crypto, currentUser, toggle, setToggle} = props;
 const [content, setContent] = useState("")
 const [viewBulletins, setViewBulletins] = useState(false)
 const [bulletForm, setBulletForm] = useState(false)
 const [ticker, setTicker] = useState("")
-const [tickerID, setTickerID] = useState()
+const [tickerID] = useState()
 const [title, setTitle] = useState("")
 
 
@@ -36,7 +36,7 @@ function handleComment(e){
     posting({
         content: content,
         user_id: currentUser.id,
-        crypto_id: cryptoData.id
+        crypto_id: cryptoData.id 
     })
 }
 function handleBulletin(e) {
@@ -44,10 +44,10 @@ function handleBulletin(e) {
     console.log(tickerID)
   //   handleTicker();
     handlePost ({
-      title: title,
-      content: content,
-      user_id: currentUser.id,
-      crypto_id: cryptoData.id
+    title: title,
+    content: content,
+    user_id: currentUser.id,
+    crypto_id: cryptoData.id
     })
 }
 
@@ -58,8 +58,8 @@ function handlePost(newBulletin) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newBulletin),
+    },
+    body: JSON.stringify(newBulletin),
     })
     .then(resp => resp.json())
     .then(
@@ -92,9 +92,11 @@ let generateComs = cryptoData.comments ?(
             <div>
                         <Card>
                         <Card.Content>
+                        <p> Created by: {comment.user.name} </p>
                         <Header> {comment.content} </Header>
+                        
                         <Button onClick={() => setCommentForm(!commentForm)} color='green'> Add Comment </Button>
-                        {currentUser.id === comment.user.id ? (<Button color="red"> Delete Comment </Button>):(null)}
+                        {currentUser.id === comment.user.id ? (<Button onClick={(e) =>handleDelete(comment)} color="red"> Delete Comment </Button>):(null)}
                         {/* <button className="ui button" onClick={() => setViewComments(!viewComments)}> Close Form </button> */}
                         </Card.Content>
                 </Card>
@@ -110,9 +112,12 @@ let generateBullets = cryptoData.bulletins ? (
                     <Card>
                     <Card.Content>
                     <Header> {bullet.title} </Header>
+                    <p> Created by: {bullet.user.name} </p>
                     <Header> {bullet.content} </Header>
+                    
+                    <br/>
                     <Button onClick={() => setBulletForm(!bulletForm)} color='orange'> Create Bulletin </Button>
-                    {currentUser.id === bullet.user.id ? (<Button color="red"> Delete Bulletin </Button>):(null)}
+                    {currentUser.id === bullet.user.id ? (<Button onClick={(e) =>handleDestroy(bullet)} color="red"> Delete Bulletin </Button>):(null)}
                     {/* <button className="ui button" onClick={() => setViewBulletins(!viewBulletins)}> Close Form </button> */}
                     </Card.Content>
             </Card>
@@ -120,7 +125,31 @@ let generateBullets = cryptoData.bulletins ? (
         </div>
 )}))):(null)
 
+// delete actions
+function handleDestroy(bullet){
+    fetch(`/bulletins/${bullet.id}`,{
+    method: "DELETE",
+    headers:{
+    "Content-Type" : "application/json"
+    }})
+    .then(setToggle(!toggle))
+}
 
+function handleDelete(comment){
+fetch(`/comments/${comment.id}`,{
+    method: "DELETE",
+    headers:{
+    "Content-Type" : "application/json"
+    }})
+    .then(setToggle(!toggle))
+}
+
+//on submit, pop open comments/bulletings
+
+function handleCommentSubmit(){
+    setCommentForm(!commentForm)
+    setViewComments(!viewComments)
+}
 return(
         <Modal
             onClose={() => setOpen(false)}
@@ -129,7 +158,7 @@ return(
             trigger={<p> Details </p>}
             className="modaldetail">
         <Modal.Content>
-            <div className='details' style={linkStyles}>
+            <div className='details' floated="left" style={linkStyles}>
             <h1> {cryptoData.data} </h1>
             <p> Statistics: </p>
             <li> 24 Hour High - {crypto.h} </li>
@@ -143,20 +172,22 @@ return(
             <Button onClick={() => setViewBulletins(!viewBulletins)} basic color='green'> View Bulletins </Button>
             </div>
         </Modal.Content>
-        <div className="detailcard">
+        <div justify="left" className="detailcard">
             { viewComments? ([generateComs]):(null)}
         <br/>
             { viewComments? (null):(
                 <Card>
                     <CardContent>
                     <Header> Add a comment..  </Header>
-                        <Button onClick={() => setCommentForm(!commentForm)} color='red'> Add Comment </Button>
+                        <Button onClick={() => setCommentForm(!commentForm)} color='teal'> Add Comment </Button>
                     </CardContent>
                     </Card>
                 )}
+        </div>
             <br/>
+            <div floated="right">
             { viewBulletins? ([generateBullets]):(null)}
-            <br/>
+            {/* <br/> */}
 
             {viewBulletins ? (null): (
                 <Card>
@@ -167,7 +198,8 @@ return(
                 </Card>
             )}
             <br/>
-
+        </div>
+        <div >
     {
         commentForm? (
         <Card>
@@ -179,7 +211,7 @@ return(
             <br/>
             <br/>
             <button className="ui button" type="submit"> Submit Comment </button>
-            <button className="ui button" onClick={() =>setCommentForm(!commentForm)}> Close Form </button>
+            <button className="ui button" onClick={() => handleCommentSubmit}> Close Form </button>
         </Form>
         </Card.Content>
         </Card> 

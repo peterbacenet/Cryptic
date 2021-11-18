@@ -16,9 +16,10 @@ const [marketData, setMarketData] = useState([])
 const [input, setInput] = useState("")
 const [allBullets, setAllBullets] = useState([])
 const [news, setNews] = useState([])
+const [toggle, setToggle] = useState(false)
 // const [watchlist, setWatchlist] = useState([])
 // const rest = restClient("ozCbtJMUwHk31pXy7OhIeWbHzjytSflP");
-const date = "2021-11-05"
+const date = "2021-11-16"
 // const featuredCrypto = marketData.find((data) => (data.T = "X:BTCUSD"))
 const filter = ( marketData.filter((data) => input === "" || data.T.toLowerCase().includes(input.toLowerCase()) ))
 // auto load market data
@@ -30,6 +31,11 @@ useEffect( () => {
 })
 }, [])
 
+//auto refresh upon post 
+
+useEffect(() => {
+    console.log("Re-Running...")
+    },[toggle]);
 
 // auto load bulletins on load
 useEffect( () => { 
@@ -38,7 +44,7 @@ useEffect( () => {
     .then(data => {
     allBullets.push(data)
 })
-}, [setAllBullets])
+}, [])
 
 if (currentUser) {
 console.log(currentUser)
@@ -53,18 +59,20 @@ const singleCrypto = filter.map((crypto) => (
         key={crypto.T}
         currentUser={currentUser} 
         crypto={crypto}
+        toggle={toggle}
+        setToggle={setToggle}
         />
 ))
 //fetch news
 useEffect( () => {
-    fetch('https://api.polygon.io/v2/reference/news?ticker=BTC&order=asc&limit=10&apiKey=ozCbtJMUwHk31pXy7OhIeWbHzjytSflP')
+    fetch('https://api.polygon.io/v2/reference/news?ticker=BTC&order=asc&limit=15&apiKey=ozCbtJMUwHk31pXy7OhIeWbHzjytSflP')
     .then((r) => r.json())
     .then(data => {setNews(data.results)})
 },[])
 // render news in containers
 console.log(news)
 const singleNews = news.map((article) => (
-    <News article={article}/>
+    <News key={article.id} article={article}/>
 ))
 console.log(news)
     return (
@@ -93,7 +101,7 @@ console.log(news)
                     </Route>
                     {currentUser? (
                     <Route path="/profile">
-                        <Profile currentUser={currentUser} />
+                        <Profile currentUser={currentUser} toggle={toggle} setToggle={setToggle} />
                     </Route>
                     ):(
                     <Route path="/profile">

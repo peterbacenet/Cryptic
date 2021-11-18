@@ -12,7 +12,12 @@ class CommentsController < ApplicationController
             render json: new_comment.errors, status: 422
         end
     end
-
+    
+    def destroy
+        selected_comment = Comment.find(params[:id])
+        selected_comment.destroy
+        render json: selected_comment, status: 200
+    end
     private
 
     def comment_params

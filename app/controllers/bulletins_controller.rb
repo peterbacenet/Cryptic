@@ -22,6 +22,11 @@ class BulletinsController < ApplicationController
         crypto_bulletin = Bulletin.find(params[:crypto_id])
         render json: crypto_bulletin, status: 200
     end
+    def destroy
+        selected_bulletin = Bulletin.find(params[:id])
+        selected_bulletin.destroy
+        render json: selected_bulletin, status: 200
+    end
     private
 
     def bulletin_params
