@@ -19,7 +19,7 @@ const [news, setNews] = useState([])
 const [toggle, setToggle] = useState(false)
 // const [watchlist, setWatchlist] = useState([])
 // const rest = restClient("ozCbtJMUwHk31pXy7OhIeWbHzjytSflP");
-const date = "2021-11-16"
+const date = "2021-11-25"
 // const featuredCrypto = marketData.find((data) => (data.T = "X:BTCUSD"))
 const filter = ( marketData.filter((data) => input === "" || data.T.toLowerCase().includes(input.toLowerCase()) ))
 // auto load market data
