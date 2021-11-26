@@ -112,11 +112,11 @@ ui.modal {
 } */
 
 .newss {
-  padding: 5px;
+  padding: 10px;
   flex-wrap:wrap;
   display: flex;
   flex-flow: wrap;
-  justify-content: space-between  ;
+  justify-content: space-between;
   
 }
 
@@ -153,4 +153,10 @@ ui.modal {
   align-items: baseline;
   align-content: flex-start;
   flex-wrap: wrap;
+}
+
+.column{
+  max-width: 300px;
+  justify-content: space-evenly;
+  padding-left: 40px;
 }
