@@ -18,6 +18,7 @@ class CommentsController < ApplicationController
         selected_comment.destroy
         render json: selected_comment, status: 200
     end
+    
     private
 
     def comment_params

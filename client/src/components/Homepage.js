@@ -12,6 +12,7 @@ import Authentication from "./Authentication";
 
 
 function Homepage ({currentUser, setCurrentUser}) {
+    
 const [marketData, setMarketData] = useState([])
 const [input, setInput] = useState("")
 const [allBullets, setAllBullets] = useState([])
@@ -19,7 +20,7 @@ const [news, setNews] = useState([])
 const [toggle, setToggle] = useState(false)
 // const [watchlist, setWatchlist] = useState([])
 // const rest = restClient("ozCbtJMUwHk31pXy7OhIeWbHzjytSflP");
-const date = "2021-11-25"
+const date = "2022-24-03"
 // const featuredCrypto = marketData.find((data) => (data.T = "X:BTCUSD"))
 const filter = ( marketData.filter((data) => input === "" || data.T.toLowerCase().includes(input.toLowerCase()) ))
 // auto load market data
@@ -32,7 +33,6 @@ useEffect( () => {
 }, [])
 
 //auto refresh upon post 
-
 useEffect(() => {
     console.log("Re-Running...")
     },[toggle]);
@@ -46,14 +46,16 @@ useEffect( () => {
 })
 }, [])
 
+// if user is logged in.. 
 if (currentUser) {
-console.log(currentUser)
     fetch(`/watchlists/${currentUser.id}`)
     .then((r) => r.json())
     .then(data => {
-        console.log(data)
+        console.log("this is the user data", data)
     })
 } 
+
+// for each crypto pairing, create a crypto container
 const singleCrypto = filter.map((crypto) => (
     <CryptoContainer 
         key={crypto.T}
@@ -63,25 +65,29 @@ const singleCrypto = filter.map((crypto) => (
         setToggle={setToggle}
         />
 ))
-//fetch news
+
+//fetch news from foreign api, set destination to array, update news with data.results
 useEffect( () => {
     fetch('https://api.polygon.io/v2/reference/news?ticker=BTC&order=asc&limit=15&apiKey=ozCbtJMUwHk31pXy7OhIeWbHzjytSflP')
     .then((r) => r.json())
-    .then(data => {setNews(data.results)})
+    .then(data => {
+        setNews(data.results)
+        console.log("news pulled", data.results)
+    })
 },[])
+
 // render news in containers
-console.log(news)
 const singleNews = news.map((article) => (
     <News key={article.id} article={article}/>
 ))
-console.log(news)
+
+console.log("this is the news", singleNews)
     return (
         <div>
             <div className='ui menu'>
                 <Navigation currentUser={currentUser} setCurrentUser={setCurrentUser} />
             </div>
                 <Switch>
-
                     <Route exact path ="/">
                         <div className="titlehead">
                             <br/>

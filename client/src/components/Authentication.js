@@ -1,10 +1,10 @@
 import React from 'react'
-import { Button, Header, Form, Modal } from 'semantic-ui-react'
-import { useState} from 'react';
+import {Button, Header, Form, Modal } from 'semantic-ui-react'
+import {useState} from 'react';
 
 function Authentication (props) {
 // authentication should be a modal
-    const { setCurrentUser} = props;
+    const {setCurrentUser} = props;
     const [open, setOpen] = React.useState(false)
     // const [authChecked, setAuthChecked] = useState(false)
     const [signUp, setSignUp] = useState(false)
@@ -54,7 +54,6 @@ console.log(name, password, confirmation)
             if (res.ok) {
                 res.json().then(user => {
                     setCurrentUser(user)
-                    console.log(user)
                     setOpen(false)
                 })
             } else {

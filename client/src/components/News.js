@@ -1,7 +1,7 @@
 import { CardContent, Card, CardDescription } from "semantic-ui-react";
 
 function News({article}){
-    // console.log(article)
+    console.log(article)
     return(
         <div className="news">
             <Card>

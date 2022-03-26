@@ -7,11 +7,12 @@ const [cryptoData, setCryptoData] = useState([])
 const [watch, setWatch] = useState(false)
 
 // patches watchlist to include clicked crypto, triggers create crypto
+
+console.log(crypto)
+
 function handleWatch() { 
-    console.log(crypto)
     setWatch(!watch)
     currentUser.watchlists.push(crypto)
-    console.log(currentUser.watchlists)
 fetch(`/watchlists/`, {
     method: "POST",
     headers: {
@@ -32,7 +33,7 @@ fetch(`/watchlists/`, {
     })
 }).then(res => {
     if(res.ok)
-    console.log(currentUser)
+    console.log(currentUser.watchlists)
 
     else
     console.log("Patch failed")
