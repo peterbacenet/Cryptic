@@ -6,7 +6,7 @@ const {crypto,currentUser, toggle, setToggle} = props;
 const [cryptoData, setCryptoData] = useState([])
 const [watch, setWatch] = useState(false)
 // patches watchlist to include clicked crypto, triggers create crypto
-
+// test
 console.log(crypto)
 
 function handleWatch() { 
